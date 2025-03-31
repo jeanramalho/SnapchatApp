@@ -6,7 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CE65DB342D9B216200A259CA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB332D9B216200A259CA /* FirebaseAnalytics */; };
+		CE65DB362D9B216200A259CA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB352D9B216200A259CA /* FirebaseAuth */; };
+		CE65DB382D9B216200A259CA /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB372D9B216200A259CA /* FirebaseAuthCombine-Community */; };
+		CE65DB3A2D9B216200A259CA /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB392D9B216200A259CA /* FirebaseCore */; };
+		CE65DB3C2D9B216200A259CA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB3B2D9B216200A259CA /* FirebaseDatabase */; };
+		CE65DB3E2D9B216200A259CA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB3D2D9B216200A259CA /* FirebaseFirestore */; };
+		CE65DB402D9B216200A259CA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB3F2D9B216200A259CA /* FirebaseStorage */; };
+		CE65DB422D9B216200A259CA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CE65DB412D9B216200A259CA /* FirebaseStorageCombine-Community */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		5D961EE061DF1607A0AE2CF9 /* Pods_SnapchatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SnapchatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB527F32D9B10C800D31034 /* SnapchatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapchatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,17 +48,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE65DB3C2D9B216200A259CA /* FirebaseDatabase in Frameworks */,
+				CE65DB342D9B216200A259CA /* FirebaseAnalytics in Frameworks */,
+				CE65DB3A2D9B216200A259CA /* FirebaseCore in Frameworks */,
+				CE65DB362D9B216200A259CA /* FirebaseAuth in Frameworks */,
+				CE65DB402D9B216200A259CA /* FirebaseStorage in Frameworks */,
+				CE65DB382D9B216200A259CA /* FirebaseAuthCombine-Community in Frameworks */,
+				CE65DB422D9B216200A259CA /* FirebaseStorageCombine-Community in Frameworks */,
+				CE65DB3E2D9B216200A259CA /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40C0D197CE0EEA578668E2A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5D961EE061DF1607A0AE2CF9 /* Pods_SnapchatApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CEB527EA2D9B10C800D31034 = {
 			isa = PBXGroup;
 			children = (
 				CEB527F52D9B10C800D31034 /* SnapchatApp */,
 				CEB527F42D9B10C800D31034 /* Products */,
+				40C0D197CE0EEA578668E2A8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,8 +106,6 @@
 				CEB527F52D9B10C800D31034 /* SnapchatApp */,
 			);
 			name = SnapchatApp;
-			packageProductDependencies = (
-			);
 			productName = SnapchatApp;
 			productReference = CEB527F32D9B10C800D31034 /* SnapchatApp.app */;
 			productType = "com.apple.product-type.application";
@@ -107,6 +134,9 @@
 			);
 			mainGroup = CEB527EA2D9B10C800D31034;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEB527F42D9B10C800D31034 /* Products */;
 			projectDirPath = "";
@@ -333,6 +363,60 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CE65DB332D9B216200A259CA /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		CE65DB352D9B216200A259CA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		CE65DB372D9B216200A259CA /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		CE65DB392D9B216200A259CA /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		CE65DB3B2D9B216200A259CA /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		CE65DB3D2D9B216200A259CA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		CE65DB3F2D9B216200A259CA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		CE65DB412D9B216200A259CA /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE65DB322D9B216200A259CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CEB527EB2D9B10C800D31034 /* Project object */;
 }
