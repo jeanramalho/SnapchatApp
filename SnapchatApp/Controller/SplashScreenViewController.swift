@@ -18,6 +18,7 @@ class SplashScreenViewController: UIViewController {
     
     private func setup(){
         
+        showLoginView()
         setHierarchy()
         setConstraints()
     }
@@ -37,5 +38,12 @@ class SplashScreenViewController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func showLoginView(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            let loginViewController = SnapchatLoginViewController()
+            self.navigationController?.setViewControllers([loginViewController], animated: true)
+        }
     }
 }

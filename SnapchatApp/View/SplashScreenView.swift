@@ -9,6 +9,14 @@ import UIKit
 
 class SplashScreenView: UIView {
     
+    lazy var logoSplashScreenImageView: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        image.image = UIImage(named: "logo")
+        return image
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -20,16 +28,22 @@ class SplashScreenView: UIView {
     
     private func setupUI(){
         
-        backgroundColor = .red
+        backgroundColor = .yellow
         setHierarchy()
         setConstraints()
     }
     
     private func setHierarchy(){
         
+        addSubview(logoSplashScreenImageView)
     }
     
     private func setConstraints(){
         
+        NSLayoutConstraint.activate([
+            logoSplashScreenImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            logoSplashScreenImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            logoSplashScreenImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2),
+        ])
     }
 }
