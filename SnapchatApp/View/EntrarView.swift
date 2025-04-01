@@ -28,10 +28,10 @@ class EntrarView: UIView {
     }()
     
     
-    lazy var emailTextFiel: UITextField = {
-        let textField = UITextField()
+    lazy var emailTextFiel: PaddedTextField = {
+        let textField = PaddedTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = " Digite seu email..."
+        textField.placeholder = "Digite seu email..."
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
@@ -39,10 +39,10 @@ class EntrarView: UIView {
         return textField
     }()
     
-    lazy var senhaTextFiel: UITextField = {
-        let textField = UITextField()
+    lazy var senhaTextFiel: PaddedTextField = {
+        let textField = PaddedTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = " Digite sua senha..."
+        textField.placeholder = "Digite sua senha..."
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor

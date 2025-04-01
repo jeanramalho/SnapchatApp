@@ -51,8 +51,6 @@ class SnapchatLoginViewController: UIViewController {
     
     @objc private func showCadastrarView(){
         
-        print("clicado")
-        
         let cadastrarViewController = CadastrarViewController()
         
         self.navigationController?.pushViewController(cadastrarViewController, animated: true)
