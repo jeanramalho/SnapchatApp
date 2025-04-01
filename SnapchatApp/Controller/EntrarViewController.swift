@@ -96,4 +96,5 @@ class EntrarViewController: UIViewController {
         
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
+    
 }

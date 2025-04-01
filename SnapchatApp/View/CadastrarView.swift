@@ -43,6 +43,7 @@ class CadastrarView: UIView {
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
+        textField.keyboardType = .emailAddress
         textField.layer.cornerRadius = 6
         return textField
     }()
@@ -56,6 +57,7 @@ class CadastrarView: UIView {
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.cornerRadius = 6
         textField.isSecureTextEntry = true
+        textField.textContentType = .oneTimeCode
         return textField
     }()
     
@@ -68,6 +70,7 @@ class CadastrarView: UIView {
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.cornerRadius = 6
         textField.isSecureTextEntry = true
+        textField.textContentType = .oneTimeCode
         return textField
     }()
     

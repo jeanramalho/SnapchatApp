@@ -33,6 +33,7 @@ class EntrarView: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Digite seu email..."
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        textField.keyboardType = .emailAddress
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.cornerRadius = 6
