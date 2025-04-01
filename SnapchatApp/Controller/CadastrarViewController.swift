@@ -157,15 +157,17 @@ class CadastrarViewController: UIViewController {
                 autenticacao.createUser(withEmail: userEmail, password: userPassword) { user, error in
                     
                     if error == nil {
+                        self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
                         print("Usuario criado com sucesso")
                     } else {
-                        
+
                         guard let erroNS = error as? NSError else {return}
-                        if let nomeErro = erroNS.userInfo["error_name"] {
+                        
+                        if let nomeErro = erroNS.userInfo["FIRAuthErrorUserInfoNameKey"] {
                             
                             guard let textoDoErro = nomeErro as? String else {return}
                             var mensagemErro = ""
-                            
+                 
                             switch textoDoErro {
                                 
                             case "ERROR_INVALID_EMAIL" :
@@ -182,8 +184,8 @@ class CadastrarViewController: UIViewController {
                             }
                             
                             self.alertMessage(title: "Dados incorretos!", message: mensagemErro)
+
                         }
-                        
                         
                         print("Erro ao criar usuário: \(String(describing: error?.localizedDescription))")
                     }// fim da validacao de erro firebase
