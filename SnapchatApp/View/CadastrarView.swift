@@ -55,6 +55,7 @@ class CadastrarView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.cornerRadius = 6
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -66,6 +67,7 @@ class CadastrarView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.cornerRadius = 6
+        textField.isSecureTextEntry = true
         return textField
     }()
     

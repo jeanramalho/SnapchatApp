@@ -46,6 +46,7 @@ class EntrarView: UIView {
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
+        textField.isSecureTextEntry = true
         textField.layer.cornerRadius = 6
         return textField
     }()
