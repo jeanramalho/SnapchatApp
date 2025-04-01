@@ -56,6 +56,32 @@ class CadastrarViewController: UIViewController {
         
     }
     
+    private func setupNavigationBar(){
+        
+        self.title = "Cadastra-se"
+            
+            if let navigationbar = navigationController?.navigationBar {
+                
+                let navigationBarLayout = UINavigationBarAppearance()
+                navigationBarLayout.configureWithOpaqueBackground()
+                navigationBarLayout.backgroundColor = .clear
+                
+                let fontAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .medium)
+                ]
+                
+                navigationBarLayout.titleTextAttributes = fontAttributes
+                
+                navigationbar.standardAppearance = navigationBarLayout
+                navigationbar.scrollEdgeAppearance = navigationBarLayout
+                navigationbar.compactAppearance = navigationBarLayout
+                
+                navigationbar.tintColor = .systemBlue
+            }
+            
+        }
+    
     private func setHierarchy(){
         
         view.addSubview(contentView)

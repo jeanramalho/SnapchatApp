@@ -26,6 +26,7 @@ class EntrarViewController: UIViewController {
     
     private func setup(){
         
+        setupNavigationBar()
         setupContentView()
         setHierarchy()
         setConstraints()
@@ -41,6 +42,32 @@ class EntrarViewController: UIViewController {
         senhaTextFiel.rightViewMode = .always
         
     }
+    
+    private func setupNavigationBar(){
+        
+        self.title = "Fazer Login"
+            
+            if let navigationbar = navigationController?.navigationBar {
+                
+                let navigationBarLayout = UINavigationBarAppearance()
+                navigationBarLayout.configureWithOpaqueBackground()
+                navigationBarLayout.backgroundColor = .clear
+                
+                let fontAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .medium)
+                ]
+                
+                navigationBarLayout.titleTextAttributes = fontAttributes
+                
+                navigationbar.standardAppearance = navigationBarLayout
+                navigationbar.scrollEdgeAppearance = navigationBarLayout
+                navigationbar.compactAppearance = navigationBarLayout
+                
+                navigationbar.tintColor = .systemBlue
+            }
+            
+        }
     
     private func setHierarchy(){
         
