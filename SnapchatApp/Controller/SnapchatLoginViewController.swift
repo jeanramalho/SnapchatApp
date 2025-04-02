@@ -6,6 +6,7 @@
 //
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class SnapchatLoginViewController: UIViewController {
     
@@ -18,9 +19,23 @@ class SnapchatLoginViewController: UIViewController {
     
     private func setup(){
         
+        loginAutomatico()
         setupContentView()
         setHierarchy()
         setConstraints()
+    }
+    
+    private func loginAutomatico(){
+        
+        let autenticacao = Auth.auth()
+        autenticacao.addStateDidChangeListener { auth, user in
+            
+            if let loggedUser = user {
+                let homeViewController = HomeViewController()
+                
+                self.navigationController?.setViewControllers([homeViewController], animated: true)
+            }
+        }
     }
     
     private func setupContentView(){
