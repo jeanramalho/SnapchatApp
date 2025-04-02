@@ -38,6 +38,9 @@ class EntrarViewController: UIViewController {
         verSenhaButton.addTarget(self, action: #selector(showPassword), for: .touchUpInside)
         
         let senhaTextFiel = contentView.senhaTextFiel
+        let entrarButton = contentView.entrarButton
+        
+        entrarButton.addTarget(self, action: #selector(showHomeView), for: .touchUpInside)
         
         senhaTextFiel.rightView = verSenhaButton
         senhaTextFiel.rightViewMode = .always
@@ -124,7 +127,25 @@ class EntrarViewController: UIViewController {
             // Autentica usuário no firebase
             let autenticacao = Auth.auth()
             
-            
+            autenticacao.signIn(withEmail: email, password: senha) { user, error in
+                
+                if error == nil {
+                    
+                    if user == nil {
+                        
+                        self.alertMessage(title: "Usuário não encontrado!", message: "Tente novamente com um usuário válido!")
+                        
+                    } else {
+                
+                            self.navigationController?.setViewControllers([homeViewController], animated: true)
+                        
+                    }
+                    
+                } else {
+                    self.alertMessage(title: "Dados incorretos!", message: "Preencha os dados corretamente para fazer login!")
+                    print("Erros incorretos!")
+                }
+            }
             
             
         } else {

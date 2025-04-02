@@ -161,10 +161,11 @@ class CadastrarViewController: UIViewController {
                         
                         let homeViewController = HomeViewController()
                         
+                        self.navigationController?.setViewControllers([homeViewController], animated: true)
+                        
                         self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
                         print("Usuario criado com sucesso")
-                        
-                        self.navigationController?.setViewControllers([homeViewController], animated: true)
+
                         
                     } else {
 
