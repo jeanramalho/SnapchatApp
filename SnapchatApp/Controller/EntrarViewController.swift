@@ -6,6 +6,7 @@
 //
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class EntrarViewController: UIViewController {
     
@@ -86,6 +87,17 @@ class EntrarViewController: UIViewController {
         ])
     }
     
+    private func alertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     @objc private func showPassword(_ sender: UIButton){
         
         let senhaTextFiel = contentView.senhaTextFiel
@@ -97,4 +109,27 @@ class EntrarViewController: UIViewController {
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
+    @objc private func showHomeView(){
+        
+        let homeViewController = HomeViewController()
+        
+        if let email = contentView.emailTextFiel.text,
+           let senha = contentView.senhaTextFiel.text {
+            
+            if email == "" || senha == "" {
+                
+                alertMessage(title: "Preencha todos os dados!", message: "Os campos de email e senha devem ser preenchidos corretamente para fazer login!")
+            }
+            
+            // Autentica usuário no firebase
+            let autenticacao = Auth.auth()
+            
+            
+            
+            
+        } else {
+            print("Erro ao tentar recuperar os dados")
+        }
+        
+    }
 }

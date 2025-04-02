@@ -35,6 +35,7 @@ class CadastrarViewController: UIViewController {
     
     private func setup(){
         
+        setupNavigationBar()
         setupContentView()
         setHierarchy()
         setConstraints()
@@ -157,8 +158,14 @@ class CadastrarViewController: UIViewController {
                 autenticacao.createUser(withEmail: userEmail, password: userPassword) { user, error in
                     
                     if error == nil {
+                        
+                        let homeViewController = HomeViewController()
+                        
                         self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
                         print("Usuario criado com sucesso")
+                        
+                        self.navigationController?.setViewControllers([homeViewController], animated: true)
+                        
                     } else {
 
                         guard let erroNS = error as? NSError else {return}
