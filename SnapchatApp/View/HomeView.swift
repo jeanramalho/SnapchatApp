@@ -9,6 +9,12 @@ import UIKit
 
 class HomeView: UIView {
     
+    lazy var snapsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -20,19 +26,22 @@ class HomeView: UIView {
     
     private func setupUI(){
         
-        backgroundColor = .green
+        backgroundColor = .white
         setHierarchy()
         setConstraints()
     }
     
     private func setHierarchy(){
-        
+        addSubview(snapsTableView)
     }
     
     private func setConstraints(){
         
         NSLayoutConstraint.activate([
-            
+            snapsTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            snapsTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            snapsTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            snapsTableView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 }
