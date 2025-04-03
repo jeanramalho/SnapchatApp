@@ -1,15 +1,15 @@
 //
-//  HomeViewController.swift
+//  NovoSnapViewController.swift
 //  SnapchatApp
 //
-//  Created by Jean Ramalho on 01/04/25.
+//  Created by Jean Ramalho on 03/04/25.
 //
 import Foundation
 import UIKit
 
-class HomeViewController: UIViewController {
+class NovoSnapViewController: UIViewController {
     
-    let contentView: HomeView = HomeView()
+    let contentView: NovoSnapView = NovoSnapView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,14 +19,14 @@ class HomeViewController: UIViewController {
     private func setup(){
         
         setupNavigationBar()
-        setupContentView()
+        setupContenView()
         setHierarchy()
         setConstraints()
     }
     
     private func setupNavigationBar(){
         
-        self.title = "Snaps"
+        self.title = "Crie seu Snap"
             
             if let navigationbar = navigationController?.navigationBar {
                 
@@ -47,29 +47,19 @@ class HomeViewController: UIViewController {
                 
                 navigationbar.tintColor = .systemBlue
                 
-                navigationItem.leftBarButtonItem = UIBarButtonItem(
-                    title: "Sair",
+                
+                navigationItem.rightBarButtonItem = UIBarButtonItem(
+                    image: UIImage(systemName: "camera"),
                     style: .plain,
                     target: self,
                     action: nil
-                )
-                
-                navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    image: UIImage(systemName: "plus"),
-                    style: .plain,
-                    target: self,
-                    action: #selector(showNovoSnapView)
                 )
             }
             
         }
     
-    private func setupContentView(){
+    private func setupContenView(){
         
-        let snapsTableView = contentView.snapsTableView
-        
-        snapsTableView.dataSource = self
-        snapsTableView.delegate = self
     }
     
     private func setHierarchy(){
@@ -88,23 +78,4 @@ class HomeViewController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-    
-    @objc private func showNovoSnapView(){
-        
-        let novoSnapView = NovoSnapViewController()
-        
-        self.navigationController?.pushViewController(novoSnapView, animated: true)
-    }
-}
-
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    
 }
