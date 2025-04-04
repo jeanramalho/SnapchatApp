@@ -6,6 +6,7 @@
 //
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class HomeViewController: UIViewController {
     
@@ -51,7 +52,7 @@ class HomeViewController: UIViewController {
                     title: "Sair",
                     style: .plain,
                     target: self,
-                    action: nil
+                    action: #selector(logoutSnapchat)
                 )
                 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -94,6 +95,19 @@ class HomeViewController: UIViewController {
         let novoSnapView = NovoSnapViewController()
         
         self.navigationController?.pushViewController(novoSnapView, animated: true)
+    }
+    
+    @objc private func logoutSnapchat(){
+        
+        let auth = Auth.auth()
+        let loginViewController = SnapchatLoginViewController()
+        
+        do {
+            try auth.signOut()
+            self.navigationController?.setViewControllers([loginViewController], animated: true)
+        } catch {
+            print("Erro realizar logout: \(error.localizedDescription)")
+        }
     }
 }
 
