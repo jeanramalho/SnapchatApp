@@ -11,6 +11,14 @@ class NovoSnapViewController: UIViewController {
     
     let contentView: NovoSnapView = NovoSnapView()
     
+    // Instancia variavel que controla selecao de imagens ou tirar foto
+    lazy var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        return imagePicker
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -78,4 +86,13 @@ class NovoSnapViewController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
+    
+    @objc private func criarSnap(){
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+extension NovoSnapViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
 }
