@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import PhotosUI
+import FirebaseStorage
 
 class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -103,6 +104,46 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         present(picker, animated: true)
         
+    }
+    
+    @objc private func nextStep(){
+        
+        let proximoButton = contentView.proximoButton
+        let snapImageView = contentView.snapImageView
+        
+        proximoButton.isEnabled = false
+        proximoButton.setTitle("Carregando...", for: .normal)
+        
+        // pega como referencia o armazenamento raiz do firebase
+        let storage = Storage.storage().reference()
+        // cria pasta que salvará as imagens
+        let storageImg = storage.child("imagens")
+        
+        // recupera imagem do snap
+        if let selectedImg = snapImageView.image {
+            
+            // transforma a imagem do snap em jpg e comprime com a qualidade selecionada
+            if let dataImage = selectedImg.jpegData(compressionQuality: 0.5) {
+                
+                // salva a imagem no firebase
+                storageImg.child("imagem.jpg").putData(dataImage, metadata: nil) { metaDados, erro in
+                    
+                    // trata se houver erros
+                    if erro == nil {
+                        
+                        proximoButton.isEnabled = true
+                        proximoButton.setTitle("Próximo", for: .normal)
+                        
+                        
+                    } else {
+                        
+                        print("Erro ao realizar upload da imagem!")
+                    }
+                    
+                }
+            }
+            
+        }
     }
 }
 
