@@ -77,6 +77,8 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         proximoButton.isEnabled = false
         proximoButton.backgroundColor = .lightGray
+        
+        proximoButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
     }
     
     private func setHierarchy(){

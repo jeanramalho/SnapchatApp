@@ -50,7 +50,7 @@ class CadastrarViewController: UIViewController {
         
         verSenhaButton.addTarget(self, action: #selector(showPassword), for: .touchUpInside)
         verConfirmarSenhaButton.addTarget(self, action: #selector(showConfirmPassword), for: .touchUpInside)
-    
+        
         cadastrarButton.addTarget(self, action: #selector(salvaUsuario), for: .touchUpInside)
         
         senhaTextFiel.rightView = verSenhaButton
@@ -65,28 +65,28 @@ class CadastrarViewController: UIViewController {
     private func setupNavigationBar(){
         
         self.title = "Cadastra-se"
+        
+        if let navigationbar = navigationController?.navigationBar {
             
-            if let navigationbar = navigationController?.navigationBar {
-                
-                let navigationBarLayout = UINavigationBarAppearance()
-                navigationBarLayout.configureWithOpaqueBackground()
-                navigationBarLayout.backgroundColor = .clear
-                
-                let fontAttributes = [
-                    NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .medium)
-                ]
-                
-                navigationBarLayout.titleTextAttributes = fontAttributes
-                
-                navigationbar.standardAppearance = navigationBarLayout
-                navigationbar.scrollEdgeAppearance = navigationBarLayout
-                navigationbar.compactAppearance = navigationBarLayout
-                
-                navigationbar.tintColor = .systemBlue
-            }
+            let navigationBarLayout = UINavigationBarAppearance()
+            navigationBarLayout.configureWithOpaqueBackground()
+            navigationBarLayout.backgroundColor = .clear
             
+            let fontAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .medium)
+            ]
+            
+            navigationBarLayout.titleTextAttributes = fontAttributes
+            
+            navigationbar.standardAppearance = navigationBarLayout
+            navigationbar.scrollEdgeAppearance = navigationBarLayout
+            navigationbar.compactAppearance = navigationBarLayout
+            
+            navigationbar.tintColor = .systemBlue
         }
+        
+    }
     
     private func setHierarchy(){
         
@@ -119,9 +119,9 @@ class CadastrarViewController: UIViewController {
     @objc private func showPassword(_ sender: UIButton){
         
         let senhaTextFiel = contentView.senhaTextFiel
-       
+        
         senhaTextFiel.isSecureTextEntry.toggle()
-       
+        
         let imageName = senhaTextFiel.isSecureTextEntry ? "eye.slash" : "eye"
         
         sender.setImage(UIImage(systemName: imageName), for: .normal)
@@ -185,25 +185,25 @@ class CadastrarViewController: UIViewController {
                                 self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
                                 print("Usuario criado com sucesso")
                                 
-                                self.navigationController?.setViewControllers([homeViewController], animated: true)   
+                                self.navigationController?.setViewControllers([homeViewController], animated: true)
                                 
                             }
                             
-                         
+                            
                         }
                         
                         
-
+                        
                         
                     } else {
-
+                        
                         guard let erroNS = error as? NSError else {return}
                         
                         if let nomeErro = erroNS.userInfo["FIRAuthErrorUserInfoNameKey"] {
                             
                             guard let textoDoErro = nomeErro as? String else {return}
                             var mensagemErro = ""
-                 
+                            
                             switch textoDoErro {
                                 
                             case "ERROR_INVALID_EMAIL" :
@@ -220,7 +220,7 @@ class CadastrarViewController: UIViewController {
                             }
                             
                             self.alertMessage(title: "Dados incorretos!", message: mensagemErro)
-
+                            
                         }
                         
                         print("Erro ao criar usuário: \(String(describing: error?.localizedDescription))")
