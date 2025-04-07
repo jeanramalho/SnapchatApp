@@ -144,6 +144,10 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
                     } else {
                         
                         print("Erro ao realizar upload da imagem!")
+                        
+                        let alerta = CustomAlert(titulo: "Upload de snap falhou!", mensagem: "Erro ao realizar upload de snap, por favor tente novamente!")
+                        
+                        self.present(alerta.getAlerta(), animated: true, completion: nil)
                     }
                     
                 }

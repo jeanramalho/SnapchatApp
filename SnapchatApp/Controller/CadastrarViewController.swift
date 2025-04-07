@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class CadastrarViewController: UIViewController {
     
@@ -142,11 +143,12 @@ class CadastrarViewController: UIViewController {
         
         // tenta recuperar dados digitados
         if let userEmail = contentView.emailTextFiel.text,
+           let nomeCompleto = contentView.nomeCompletoTextFiel.text,
            let userPassword = contentView.senhaTextFiel.text,
            let confirmUserPassword = contentView.confirmaSenhaTextFiel.text {
             
             // verifica se todos os campos estão preenchidos
-            if userEmail == "" || userPassword == "" || confirmUserPassword == "" {
+            if userEmail == "" || nomeCompleto == "" || userPassword == "" || confirmUserPassword == "" {
                 alertMessage(title: "Preencha todos os campos!", message: "Preencha todos os campos para criar sua conta!")
             }
             
@@ -155,16 +157,42 @@ class CadastrarViewController: UIViewController {
                 
                 // Cria novo usuário no firebase
                 let autenticacao = Auth.auth()
-                autenticacao.createUser(withEmail: userEmail, password: userPassword) { user, error in
+                autenticacao.createUser(withEmail: userEmail, password: userPassword) { authResult, error in
                     
                     if error == nil {
                         
-                        let homeViewController = HomeViewController()
+                        let dataBase = Database.database().reference()
+                        let usuarios = dataBase.child("usuarios")
                         
-                        self.navigationController?.setViewControllers([homeViewController], animated: true)
+                        // pega o id do usário criado
+                        guard let userId = authResult?.user.uid else {return}
                         
-                        self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
-                        print("Usuario criado com sucesso")
+                        // cria um objeto com os dados do usuário
+                        let userData = ["nome": nomeCompleto, "email": userEmail]
+                        
+                        // salva dados do usuário fora da autenticacao do firebase
+                        usuarios.child( userId ).setValue(userData) { error, _ in
+                            
+                            if let erro = error {
+                                
+                                self.alertMessage(title: "Erro ao criar usuário", message: "Ocorreu um erro ao criar o usuário. Porfavor tente novamente!")
+                                
+                                print("Erro ao criar usuário: \(erro.localizedDescription)")
+                            } else {
+                                
+                                let homeViewController = HomeViewController()
+                                
+                                self.alertMessage(title: "Sucesso", message: "Usuário criado com sucesso!")
+                                print("Usuario criado com sucesso")
+                                
+                                self.navigationController?.setViewControllers([homeViewController], animated: true)   
+                                
+                            }
+                            
+                         
+                        }
+                        
+                        
 
                         
                     } else {

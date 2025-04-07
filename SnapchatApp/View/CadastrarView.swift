@@ -18,6 +18,15 @@ class CadastrarView: UIView {
         return label
     }()
     
+    lazy var nomeCompletoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.text = "Nome completo:"
+        label.tintColor = .darkGray
+        return label
+    }()
+    
     lazy var senhaLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +49,18 @@ class CadastrarView: UIView {
         let textField = PaddedTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Digite seu email..."
+        textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.darkGray.cgColor
+        textField.keyboardType = .emailAddress
+        textField.layer.cornerRadius = 6
+        return textField
+    }()
+    
+    lazy var nomeCompletoTextFiel: PaddedTextField = {
+        let textField = PaddedTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Digite seu nome completo..."
         textField.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.darkGray.cgColor
@@ -116,6 +137,8 @@ class CadastrarView: UIView {
         
         mainCadastroStackView.addArrangedSubview(emailLabel)
         mainCadastroStackView.addArrangedSubview(emailTextFiel)
+        mainCadastroStackView.addArrangedSubview(nomeCompletoLabel)
+        mainCadastroStackView.addArrangedSubview(nomeCompletoTextFiel)
         mainCadastroStackView.addArrangedSubview(senhaLabel)
         mainCadastroStackView.addArrangedSubview(senhaTextFiel)
         mainCadastroStackView.addArrangedSubview(confirmarSenhaLabel)
@@ -131,6 +154,8 @@ class CadastrarView: UIView {
             mainCadastroStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             
             emailTextFiel.heightAnchor.constraint(equalToConstant: 40),
+            
+            nomeCompletoTextFiel.heightAnchor.constraint(equalToConstant: 40),
             
             senhaTextFiel.heightAnchor.constraint(equalToConstant: 40),
             
