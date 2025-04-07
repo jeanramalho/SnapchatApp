@@ -22,6 +22,8 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
 //        return imagePicker
 //    }()
     
+    var randomImgId = UUID().uuidString
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -71,6 +73,10 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     private func setupContenView(){
         
+        let proximoButton = contentView.proximoButton
+        
+        proximoButton.isEnabled = false
+        proximoButton.backgroundColor = .lightGray
     }
     
     private func setHierarchy(){
@@ -126,7 +132,7 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
             if let dataImage = selectedImg.jpegData(compressionQuality: 0.5) {
                 
                 // salva a imagem no firebase
-                storageImg.child("imagem.jpg").putData(dataImage, metadata: nil) { metaDados, erro in
+                storageImg.child("\(self.randomImgId).jpg").putData(dataImage, metadata: nil) { metaDados, erro in
                     
                     // trata se houver erros
                     if erro == nil {
@@ -170,6 +176,9 @@ extension NovoSnapViewController: PHPickerViewControllerDelegate {
                     
                     // Utiliza a imagem
                     self.contentView.snapImageView.image = imgSelected
+                    // ativa o botao proximo
+                    self.contentView.proximoButton.isEnabled = true
+                    self.contentView.proximoButton.backgroundColor = .systemBlue
                 }
             }
         }
