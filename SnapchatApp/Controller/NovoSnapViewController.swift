@@ -98,6 +98,15 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
         ])
     }
     
+    // Função auxiliar que mostra um alerta de erro no upload
+    private func showUploadError() {
+        let alerta = CustomAlert(
+            titulo: "Upload de snap falhou!",
+            mensagem: "Erro ao realizar upload de snap, por favor tente novamente!"
+        )
+        self.present(alerta.getAlerta(), animated: true, completion: nil)
+    }
+    
     @objc private func criarSnap(){
         // Metodo ultrapassado
 //        present(imagePicker, animated: true, completion: nil)
@@ -115,47 +124,77 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     @objc private func nextStep(){
-        
+            
         let proximoButton = contentView.proximoButton
         let snapImageView = contentView.snapImageView
         
+        // Desativa o botão e mostra carregando enquanto o processo é realizado
         proximoButton.isEnabled = false
         proximoButton.setTitle("Carregando...", for: .normal)
         
-        // pega como referencia o armazenamento raiz do firebase
-        let storage = Storage.storage().reference()
-        // cria pasta que salvará as imagens
-        let storageImg = storage.child("imagens")
+        // Garante que existe uma imagem selecionada e converte para jpg com a compressão desejada
+        guard let selectedImage = snapImageView.image,
+              let dataImage = selectedImage.jpegData(compressionQuality: 0.5) else {
+            // Gera alerta de erro
+            showUploadError()
+            return
+        }
         
-        // recupera imagem do snap
-        if let selectedImg = snapImageView.image {
+        // Cria referencia base para Firebase Storage
+        let storage = Storage.storage().reference()
+        // Cria ou acessa a pasta imagens no storage
+        let imageFolder = storage.child("imagens")
+        // Gera um ID unico para a imagem
+        let randomImageId = UUID().uuidString
+        // Cria referencia do arquivo completo: imagens/NomeGeradoDaImagem.jpg
+        let imageRef = imageFolder.child("\(randomImageId).jpg")
+        
+        // Envia a imagem para o firebase storage
+        imageRef.putData(dataImage, metadata: nil) { _, uploadError in
             
-            // transforma a imagem do snap em jpg e comprime com a qualidade selecionada
-            if let dataImage = selectedImg.jpegData(compressionQuality: 0.5) {
+            // Se der erro no upload exibe alerta
+            if let uploadError = uploadError {
                 
-                // salva a imagem no firebase
-                storageImg.child("\(self.randomImgId).jpg").putData(dataImage, metadata: nil) { metaDados, erro in
-                    
-                    // trata se houver erros
-                    if erro == nil {
-                        
-                        proximoButton.isEnabled = true
-                        proximoButton.setTitle("Próximo", for: .normal)
-                        
-                        
-                    } else {
-                        
-                        print("Erro ao realizar upload da imagem!")
-                        
-                        let alerta = CustomAlert(titulo: "Upload de snap falhou!", mensagem: "Erro ao realizar upload de snap, por favor tente novamente!")
-                        
-                        self.present(alerta.getAlerta(), animated: true, completion: nil)
-                    }
-                    
-                }
+                print("Erro ao realizar upload da imagem: \(uploadError.localizedDescription)")
+                self.showUploadError()
+                return
             }
             
-        }
+            // Depois do upload tenta obter a url publica de download da imagem
+            imageRef.downloadURL { url, downloadError in
+                
+                // Se falhar, exibe o alerta
+                if let downloadError = downloadError {
+                    print("Erro ao obter url de download da imagem: \(downloadError.localizedDescription)")
+                    self.showUploadError()
+                    return
+                }
+                
+                // Se a url for nula, exibe o erro
+                guard let imageURL = url else {
+                    print("A URL é nula!")
+                    self.showUploadError()
+                    return
+                }
+                
+                // Se tudo der certo printa a url e vai para proxima tela salvando a url na variavel da proxima tela
+                print("Imagem enviada com sucesso: \(imageURL)")
+                
+                // Cria a proxima tela e envia a url para lá
+                let usersListViewController = UsersListViewController()
+                usersListViewController.imageURL = imageURL
+                
+                // Navega pra proxima tela
+                self.navigationController?.pushViewController(usersListViewController, animated: true)
+                
+                // Reativa o botão e restaura o título
+                proximoButton.isEnabled = true
+                proximoButton.setTitle("Proximo", for: .normal)
+                
+                
+            }
+        }          
+ 
     }
 }
 

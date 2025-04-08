@@ -6,10 +6,13 @@
 //
 import Foundation
 import UIKit
+import FirebaseDatabase
 
 class UsersListViewController: UIViewController {
     
     let contentView: UsersListView = UsersListView()
+    
+    var imageURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +21,20 @@ class UsersListViewController: UIViewController {
     
     private func setup(){
         
+        getUsers()
         setupContentView()
         setHierarchy()
         setConstraints()
+    }
+    
+    private func getUsers(){
+        
+        let database = Database.database().reference()
+        let usuarios = database.child("usuarios")
+        
+        usuarios.observe(.childAdded) { snapShot in
+            print(snapShot)
+        }
     }
     
     private func setupContentView(){
