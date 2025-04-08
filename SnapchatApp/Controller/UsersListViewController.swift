@@ -13,6 +13,7 @@ class UsersListViewController: UIViewController {
     let contentView: UsersListView = UsersListView()
     
     var imageURL: URL?
+    var usuarios: [Usuario] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,21 @@ class UsersListViewController: UIViewController {
         let usuarios = database.child("usuarios")
         
         usuarios.observe(.childAdded) { snapShot in
-            print(snapShot)
+            
+            // Transforma snapshot em um array com os dados retornados
+            guard let dados = snapShot.value as? NSDictionary else {return}
+            
+            // Recupera os dados do snapshot
+            guard let userEmail = dados["email"] as? String else {return}
+            guard let userName = dados["nome"] as? String else {return}
+            let userId = snapShot.key
+            
+            // Cria instancia de usuario
+            let usuario = Usuario(email: userEmail, nome: userName, uid: userId)
+            
+            // Adiciona usuário criado no array
+            self.usuarios.append(usuario)
+            self.contentView.usersListTableView.reloadData()
         }
     }
     
@@ -66,11 +81,15 @@ class UsersListViewController: UIViewController {
 
 extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return usuarios.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.textLabel?.text = usuarios[indexPath.row].nome
+        cell.detailTextLabel?.text = usuarios[indexPath.row].email
+        return cell
     }
     
     
