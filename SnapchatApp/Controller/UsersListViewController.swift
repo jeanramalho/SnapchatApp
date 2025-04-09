@@ -38,6 +38,10 @@ class UsersListViewController: UIViewController {
         
         usuarios.observe(.childAdded) { snapShot in
             
+            // Recupera usuário logado
+            let auth = Auth.auth()
+            let userLoggedId = auth.currentUser?.uid
+            
             // Transforma snapshot em um array com os dados retornados
             guard let dados = snapShot.value as? NSDictionary else {return}
             
@@ -49,8 +53,11 @@ class UsersListViewController: UIViewController {
             // Cria instancia de usuario
             let usuario = Usuario(email: userEmail, nome: userName, uid: userId)
             
-            // Adiciona usuário criado no array
-            self.usuarios.append(usuario)
+            // Adiciona usuário criado no array se ele nao for o usuário logado
+            if userId != userLoggedId {
+                self.usuarios.append(usuario)
+            }
+            
             self.contentView.usersListTableView.reloadData()
         }
     }
@@ -126,12 +133,13 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
                     "imageUrl": urlImage,
                     "imageId": idImage
                 ]
-                
-                
-                
+
                 // Cria ou acesso nó de snaps no firebase e cria o identificador unico de cada snap com a ferramenta do firebase o childbyautoid e passa um snap para o nó de snaps
                 let snaps = usuarios.child(userId).child("snaps")
                 snaps.childByAutoId().setValue(snap)
+                
+                let homeViewController = HomeViewController()
+                self.navigationController?.setViewControllers([homeViewController], animated: true)
             }
         }
         

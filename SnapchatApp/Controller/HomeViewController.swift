@@ -7,18 +7,25 @@
 import Foundation
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class HomeViewController: UIViewController {
     
     let contentView: HomeView = HomeView()
+    
+    var snaps: [Snap] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        getSnaps()
+    }
+    
     private func setup(){
-        
+
         setupNavigationBar()
         setupContentView()
         setHierarchy()
@@ -90,6 +97,43 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    private func getSnaps(){
+        
+        let auth = Auth.auth()
+        
+        if let loggedUserId = auth.currentUser?.uid {
+            
+            // Recupero Banco de dados
+            let database = Database.database().reference()
+            // Acessa no de usuários
+            let usuarios = database.child("usuarios")
+            // Acessa o mó de snaps do usuário logado
+            let snaps = usuarios.child(loggedUserId).child("snaps")
+            
+            snaps.observe(DataEventType.childAdded) { snapShot in
+                
+                guard let dados = snapShot.value as? [String: Any] else { return }
+                guard let nomeRemetente = dados["remetenteNome"] as? String else {return}
+                guard let remetente = dados["remetente"] as? String else {return}
+                guard let descricao = dados["descricao"] as? String else {return}
+                guard let imageUrl = dados["imageUrl"] as? String else {return}
+                guard let imageId = dados["imageId"] as? String else {return}
+                
+                
+                var snap = Snap(identifier: snapShot.key,
+                                remetente: remetente,
+                                remetenteNome: nomeRemetente,
+                                descricao: descricao,
+                                imageUrl: imageUrl,
+                                imageId: imageId)
+                
+                self.snaps.append(snap)
+                self.contentView.snapsTableView.reloadData()
+                
+            }
+        }
+    }
+    
     @objc private func showNovoSnapView(){
         
         let novoSnapView = NovoSnapViewController()
@@ -113,11 +157,21 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        if snaps.count > 0 {
+            return snaps.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        if snaps.count > 0 {
+            cell.textLabel?.text = snaps[indexPath.row].remetenteNome
+        } else {
+            cell.textLabel?.text = "Nenhum Snap novo para você :)"
+        }
+        return cell
     }
     
     

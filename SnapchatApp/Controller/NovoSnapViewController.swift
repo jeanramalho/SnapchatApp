@@ -134,7 +134,7 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         // Garante que existe uma imagem selecionada e converte para jpg com a compressão desejada
         guard let selectedImage = snapImageView.image,
-              let dataImage = selectedImage.jpegData(compressionQuality: 0.5) else {
+              let dataImage = selectedImage.jpegData(compressionQuality: 0.1) else {
             // Gera alerta de erro
             showUploadError()
             return
