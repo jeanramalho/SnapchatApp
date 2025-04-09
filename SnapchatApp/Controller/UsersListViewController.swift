@@ -13,6 +13,7 @@ class UsersListViewController: UIViewController {
     let contentView: UsersListView = UsersListView()
     
     var imageURL: URL?
+    var descritionSnap: String?
     var usuarios: [Usuario] = []
     
     override func viewDidLoad() {
@@ -90,6 +91,23 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = usuarios[indexPath.row].nome
         cell.detailTextLabel?.text = usuarios[indexPath.row].email
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        let user = self.usuarios[indexPath.row]
+        let userId = user.uid
+        
+        // Recupera as referencias do banco de dados
+        let database = Database.database().reference()
+        let usuarios = database.child("usuarios")
+        
+        // Cria um objeto de snap
+        let snap: [Snap] = []
+        
+        // Cria ou acesso nó de snaps no firebase e cria o identificador unico de cada snap com a ferramenta do firebase o childbyautoid e passa um snap para o nó de snaps
+        let snaps = usuarios.child(userId).child("snaps")
+        snaps.childByAutoId().setValue(snap)
     }
     
     

@@ -183,6 +183,7 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
                 // Cria a proxima tela e envia a url para lá
                 let usersListViewController = UsersListViewController()
                 usersListViewController.imageURL = imageURL
+                usersListViewController.descritionSnap = self.contentView.descriptionTextFiel.text
                 
                 // Navega pra proxima tela
                 self.navigationController?.pushViewController(usersListViewController, animated: true)
