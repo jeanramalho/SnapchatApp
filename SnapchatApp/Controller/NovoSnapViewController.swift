@@ -180,10 +180,11 @@ class NovoSnapViewController: UIViewController, UIImagePickerControllerDelegate,
                 // Se tudo der certo printa a url e vai para proxima tela salvando a url na variavel da proxima tela
                 print("Imagem enviada com sucesso: \(imageURL)")
                 
-                // Cria a proxima tela e envia a url para lá
+                // Cria a proxima tela e envia a url e outros dados para lá
                 let usersListViewController = UsersListViewController()
                 usersListViewController.imageURL = imageURL
                 usersListViewController.descritionSnap = self.contentView.descriptionTextFiel.text
+                usersListViewController.imageId = randomImageId
                 
                 // Navega pra proxima tela
                 self.navigationController?.pushViewController(usersListViewController, animated: true)

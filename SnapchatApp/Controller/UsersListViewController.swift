@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
 
 class UsersListViewController: UIViewController {
     
@@ -14,6 +15,7 @@ class UsersListViewController: UIViewController {
     
     var imageURL: URL?
     var descritionSnap: String?
+    var imageId: String?
     var usuarios: [Usuario] = []
     
     override func viewDidLoad() {
@@ -102,12 +104,38 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
         let database = Database.database().reference()
         let usuarios = database.child("usuarios")
         
-        // Cria um objeto de snap
-        let snap: [Snap] = []
+        // Recupera dados do usário logado
+        let auth = Auth.auth()
+        if let loggedUserId = auth.currentUser?.uid {
+            
+            let loggedUser = usuarios.child(loggedUserId)
+            loggedUser.observeSingleEvent(of: DataEventType.value) { snapShot  in
+                
+                guard let dados = snapShot.value as? NSDictionary else {return}
+                guard let remetentEmail = dados["email"] as? String else {return}
+                guard let remetentNome = dados["nome"] as? String else {return}
+                guard let snapDescription = self.descritionSnap  else {return}
+                guard let urlImage = self.imageURL?.absoluteString as? String else {return}
+                guard let idImage = self.imageId else {return}
+                
+                // Cria um objeto de snap
+                let snap = [
+                    "remetente": remetentEmail,
+                    "remetenteNome": remetentNome,
+                    "descricao": snapDescription,
+                    "imageUrl": urlImage,
+                    "imageId": idImage
+                ]
+                
+                
+                
+                // Cria ou acesso nó de snaps no firebase e cria o identificador unico de cada snap com a ferramenta do firebase o childbyautoid e passa um snap para o nó de snaps
+                let snaps = usuarios.child(userId).child("snaps")
+                snaps.childByAutoId().setValue(snap)
+            }
+        }
         
-        // Cria ou acesso nó de snaps no firebase e cria o identificador unico de cada snap com a ferramenta do firebase o childbyautoid e passa um snap para o nó de snaps
-        let snaps = usuarios.child(userId).child("snaps")
-        snaps.childByAutoId().setValue(snap)
+        
     }
     
     
