@@ -6,15 +6,21 @@
 ![ViewCode](https://img.shields.io/badge/Layout-ViewCode-green)
 ![Architecture](https://img.shields.io/badge/Architecture-MVC-red)
 
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 10 04](https://github.com/user-attachments/assets/5718e765-b54a-4871-9acc-ddaf4fd4c062)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 10 12](https://github.com/user-attachments/assets/75bdd4c1-05b4-4b86-88ec-be1d3ae6262e)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 10 21](https://github.com/user-attachments/assets/686c4f57-c7e9-402e-922a-1af1bef70691)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 10 45](https://github.com/user-attachments/assets/79fa6f7a-2d12-4d95-b1bb-e123619a07cc)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 10 51](https://github.com/user-attachments/assets/e59428b0-09b8-49a6-bdf8-705bdedc8367)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 11 09](https://github.com/user-attachments/assets/051f0790-e685-4422-ba70-c2a29341e253)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 11 17](https://github.com/user-attachments/assets/e83b576a-9a57-4ac1-9392-e4be17fa6f33)
-![Simulator Screenshot - Iphone 11 - 2025-04-10 at 14 11 51](https://github.com/user-attachments/assets/a0fa2563-ac12-47bc-ad69-d60648cc05f8)
+## 📸 Screenshots
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5718e765-b54a-4871-9acc-ddaf4fd4c062" width="150" />
+  <img src="https://github.com/user-attachments/assets/75bdd4c1-05b4-4b86-88ec-be1d3ae6262e" width="150" />
+  <img src="https://github.com/user-attachments/assets/686c4f57-c7e9-402e-922a-1af1bef70691" width="150" />
+  <img src="https://github.com/user-attachments/assets/79fa6f7a-2d12-4d95-b1bb-e123619a07cc" width="150" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e59428b0-09b8-49a6-bdf8-705bdedc8367" width="150" />
+  <img src="https://github.com/user-attachments/assets/051f0790-e685-4422-ba70-c2a29341e253" width="150" />
+  <img src="https://github.com/user-attachments/assets/e83b576a-9a57-4ac1-9392-e4be17fa6f33" width="150" />
+  <img src="https://github.com/user-attachments/assets/a0fa2563-ac12-47bc-ad69-d60648cc05f8" width="150" />
+</p>
 
 > Uma reimaginação do Snapchat desenvolvida para aplicação e demonstração de conceitos avançados em desenvolvimento iOS nativo com ViewCode.
 
