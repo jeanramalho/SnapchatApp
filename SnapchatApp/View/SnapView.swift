@@ -14,7 +14,7 @@ class SnapView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 12
-        stackView.distribution = .equalCentering
+        stackView.alignment = .center
         return stackView
     }()
     
@@ -28,8 +28,10 @@ class SnapView: UIView {
     lazy var legendLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 0
         label.layer.shadowColor = UIColor.black.cgColor
         label.layer.shadowOffset = CGSize(width: 2, height: 2)
         label.layer.shadowRadius = 3
@@ -81,8 +83,10 @@ class SnapView: UIView {
             legendAndTimerStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             legendAndTimerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             legendAndTimerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
             
-            circleCounter.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
+            circleCounter.heightAnchor.constraint(equalToConstant: 80),
+            circleCounter.widthAnchor.constraint(equalToConstant: 80),
         ])
     }
 }

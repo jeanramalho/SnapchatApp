@@ -120,7 +120,7 @@ class HomeViewController: UIViewController {
                 guard let imageId = dados["imageId"] as? String else {return}
                 
                 
-                var snap = Snap(identifier: snapShot.key,
+                let snap = Snap(identifier: snapShot.key,
                                 remetente: remetente,
                                 remetenteNome: nomeRemetente,
                                 descricao: descricao,
@@ -132,6 +132,14 @@ class HomeViewController: UIViewController {
                 
             }
         }
+    }
+    
+    private func showSnapModal(snap: Snap){
+        
+        let modalViewController = SnapViewController()
+        modalViewController.modalPresentationStyle = .fullScreen
+        modalViewController.snap = snap
+        present(modalViewController, animated: true)
     }
     
     @objc private func showNovoSnapView(){
@@ -156,6 +164,7 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if snaps.count > 0 {
             return snaps.count
@@ -172,6 +181,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = "Nenhum Snap novo para você :)"
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if snaps.count > 0 {
+            let snap = self.snaps[indexPath.row]
+            self.showSnapModal(snap: snap)
+        }
     }
     
     

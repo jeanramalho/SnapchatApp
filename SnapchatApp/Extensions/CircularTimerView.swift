@@ -6,19 +6,23 @@
 //
 import UIKit
 
+import UIKit
+
 class CircularTimerView: UIView {
 
     private let shapeLayer = CAShapeLayer()
     private let backgroundLayer = CAShapeLayer()
     private var duration: TimeInterval = 10
+    private var hasConfiguredLayers = false
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupCircle()
-    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        // Garante que o layout seja aplicado só uma vez
+        if !hasConfiguredLayers {
+            setupCircle()
+            hasConfiguredLayers = true
+        }
     }
 
     private func setupCircle() {
@@ -30,14 +34,14 @@ class CircularTimerView: UIView {
                                         endAngle: 3 * CGFloat.pi / 2,
                                         clockwise: true)
 
-        // Fundo (cinza claro)
+        // Fundo
         backgroundLayer.path = circularPath.cgPath
         backgroundLayer.strokeColor = UIColor.lightGray.cgColor
         backgroundLayer.lineWidth = 10
         backgroundLayer.fillColor = UIColor.clear.cgColor
         layer.addSublayer(backgroundLayer)
 
-        // Camada do progresso (colorida)
+        // Círculo principal
         shapeLayer.path = circularPath.cgPath
         shapeLayer.strokeColor = UIColor.systemPurple.cgColor
         shapeLayer.lineWidth = 10
@@ -49,6 +53,7 @@ class CircularTimerView: UIView {
 
     func startCountdown(duration: TimeInterval) {
         self.duration = duration
+        shapeLayer.removeAllAnimations()
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.toValue = 0
         animation.duration = duration
@@ -57,4 +62,5 @@ class CircularTimerView: UIView {
         shapeLayer.add(animation, forKey: "countdown")
     }
 }
+
 
