@@ -6,6 +6,9 @@
 //
 import Foundation
 import UIKit
+import FirebaseDatabase
+import FirebaseStorage
+import FirebaseAuth
 
 class SnapViewController: UIViewController {
     
@@ -42,10 +45,43 @@ class SnapViewController: UIViewController {
                     // Fecha modal após os 15 segundos de visualização da imagem
                     DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
                         self.dismiss(animated: true, completion: nil)
+                        self.eraseSnap()
                     }
                     
                 }
             }.resume()
+        }
+    }
+    
+    private func eraseSnap(){
+        
+        let auth = Auth.auth()
+        
+        if let loggedUserId = auth.currentUser?.uid {
+            
+            guard let snapIdentifier = snap?.identifier as? String else {return}
+            guard let imageIdentifier = snap?.imageId as? String else {return}
+            
+            // MARK: Apaga o snap
+            let database = Database.database().reference()
+            let usuarios = database.child("usuarios")
+            
+            let snaps = usuarios.child(loggedUserId).child("snaps")
+            
+            
+            snaps.child(snapIdentifier).removeValue()
+            
+            // MARK: Apaga a imagem do armazenamento
+            let storage = Storage.storage().reference()
+            let imagens = storage.child("imagens")
+            
+            imagens.child("\(imageIdentifier).jpg").delete { erro in
+                if erro == nil {
+                    print("Imagem do snap deletada com sucesso")
+                } else {
+                    print("Erro ao deletar imagem: \(erro?.localizedDescription ?? "")")
+                }
+            }
         }
     }
     

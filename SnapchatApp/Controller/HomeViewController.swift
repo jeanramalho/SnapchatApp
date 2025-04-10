@@ -20,12 +20,9 @@ class HomeViewController: UIViewController {
         setup()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        getSnaps()
-    }
-    
     private func setup(){
-
+        
+        updateSnaps()
         setupNavigationBar()
         setupContentView()
         setHierarchy()
@@ -97,11 +94,12 @@ class HomeViewController: UIViewController {
         ])
     }
     
-    private func getSnaps(){
+    private func updateSnaps(){
         
         let auth = Auth.auth()
         
         if let loggedUserId = auth.currentUser?.uid {
+            
             
             // Recupero Banco de dados
             let database = Database.database().reference()
@@ -110,6 +108,7 @@ class HomeViewController: UIViewController {
             // Acessa o mó de snaps do usuário logado
             let snaps = usuarios.child(loggedUserId).child("snaps")
             
+            // MARK: Observa snaps adicionados
             snaps.observe(DataEventType.childAdded) { snapShot in
                 
                 guard let dados = snapShot.value as? [String: Any] else { return }
@@ -130,6 +129,22 @@ class HomeViewController: UIViewController {
                 self.snaps.append(snap)
                 self.contentView.snapsTableView.reloadData()
                 
+            }
+            
+            // MARK: Observa snaps removidos
+            snaps.observe(DataEventType.childRemoved) { snapShot in
+                
+                var index = 0
+                for snap in self.snaps {
+                    
+                    if snap.identifier == snapShot.key {
+                        self.snaps.remove(at: index)
+                    }
+                    
+                    index = index + 1
+                }
+                
+                self.contentView.snapsTableView.reloadData()
             }
         }
     }
@@ -175,6 +190,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        cell.selectionStyle = .none
+        
         if snaps.count > 0 {
             cell.textLabel?.text = snaps[indexPath.row].remetenteNome
         } else {
